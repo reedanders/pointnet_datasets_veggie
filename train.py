@@ -56,7 +56,7 @@ HOSTNAME = socket.gethostname()
 NUM_CLASSES = 21
 
 # Shapenet official train/test split
-DATA_PATH = 'data/veggie_platter_data_pointnet2'
+DATA_PATH = 'data/veggie_platter_data'
 TRAIN_DATASET = veggie_platter_dataset.VeggiePlatterDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
 TEST_DATASET = veggie_platter_dataset.VeggiePlatterDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
 TEST_DATASET_WHOLE_SCENE = veggie_platter_dataset.VeggiePlatterDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
