@@ -121,10 +121,16 @@ class VeggiePlatterDatasetWholeScene():
 		self.npoints = npoints
 		self.root = root
 		self.split = split
-		self.data_filename = os.path.join(self.root, 'veggie_platter_%s.pickle'%(split))
-
-		with open(self.data_filename,'rb') as fp:
+		
+		self.coords_data_filename = os.path.join(self.root, 'veggie_platter_coordinates.pickle')
+		self.labels_data_filename = os.path.join(self.root, 'veggie_platter_labels.pickle')
+		
+		with open(self.coords_data_filename,'rb') as fp:
+			# Read list of pointclouds (len 1201) index narray (point, 3) float32
 			self.scene_points_list = pickle.load(fp)
+		
+		with open(self.labels_data_filename,'rb') as fp:
+			# Read list of pointclouds (len 1201) index narray (point, ) int8
 			self.semantic_labels_list = pickle.load(fp)
 
 		if split=='train':
@@ -204,10 +210,16 @@ class VeggiePlatterDatasetVirtualScan():
 		self.npoints = npoints
 		self.root = root
 		self.split = split
-		self.data_filename = os.path.join(self.root, 'veggie_platter_%s.pickle'%(split))
 		
-		with open(self.data_filename,'rb') as fp:
+		self.coords_data_filename = os.path.join(self.root, 'veggie_platter_coordinates.pickle')
+		self.labels_data_filename = os.path.join(self.root, 'veggie_platter_labels.pickle')
+		
+		with open(self.coords_data_filename,'rb') as fp:
+			# Read list of pointclouds (len 1201) index narray (point, 3) float32
 			self.scene_points_list = pickle.load(fp)
+		
+		with open(self.labels_data_filename,'rb') as fp:
+			# Read list of pointclouds (len 1201) index narray (point, ) int8
 			self.semantic_labels_list = pickle.load(fp)
 		
 		if split=='train':
