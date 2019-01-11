@@ -12,7 +12,7 @@ import numpy as np
 from utils import pc_util, scene_util
 
 
-class ScannetDataset():
+class VeggiePlatterDataset():
 
 	"""Generate training data for ScanNet scenes by sampling 1.5 x 1.5 x 3m cubes in scene
 	then subsample cube to npoints
@@ -24,26 +24,29 @@ class ScannetDataset():
 		self.npoints = npoints
 		self.root = root
 		self.split = split
-		self.data_filename = os.path.join(self.root, 'scannet_%s.pickle'%(split))
+		self.coords_data_filename = os.path.join(self.root, 'veggie_platter_coordinates.pickle')
+		self.labels_data_filename = os.path.join(self.root, 'veggie_platter_labels.pickle')
 		
-		with open(self.data_filename,'rb') as fp:
+		with open(self.coords_data_filename,'rb') as fp:
 			# Read list of pointclouds (len 1201) index narray (point, 3) float32
 			self.scene_points_list = pickle.load(fp)
+		
+		with open(self.labels_data_filename,'rb') as fp:
 			# Read list of pointclouds (len 1201) index narray (point, ) int8
 			self.semantic_labels_list = pickle.load(fp)
 		
 		if split=='train':
 			# Count labels over entire list of pointclouds and get weights as log probability
-			labelweights = np.zeros(21)
+			labelweights = np.zeros(3)
 			for seg in self.semantic_labels_list:
-				tmp,_ = np.histogram(seg,range(22))
+				tmp,_ = np.histogram(seg,range(4))
 				labelweights += tmp
 				labelweights = labelweights.astype(np.float32)
 				labelweights = labelweights/np.sum(labelweights)
 			self.labelweights = 1/np.log(1.2+labelweights)
 		
 		elif split=='test':
-			self.labelweights = np.ones(21)
+			self.labelweights = np.ones(3)
 
 	
 	def __getitem__(self, index):
@@ -107,7 +110,7 @@ class ScannetDataset():
 		return len(self.scene_points_list)
 
 
-class ScannetDatasetWholeScene():
+class VeggiePlatterDatasetWholeScene():
 
 	"""Generate cubes over all points in a scene, then subsample cube to npoints
 
@@ -118,7 +121,7 @@ class ScannetDatasetWholeScene():
 		self.npoints = npoints
 		self.root = root
 		self.split = split
-		self.data_filename = os.path.join(self.root, 'scannet_%s.pickle'%(split))
+		self.data_filename = os.path.join(self.root, 'veggie_platter_%s.pickle'%(split))
 
 		with open(self.data_filename,'rb') as fp:
 			self.scene_points_list = pickle.load(fp)
@@ -126,9 +129,9 @@ class ScannetDatasetWholeScene():
 
 		if split=='train':
 
-			labelweights = np.zeros(21)
+			labelweights = np.zeros(3)
 			for seg in self.semantic_labels_list:
-				tmp,_ = np.histogram(seg,range(22))
+				tmp,_ = np.histogram(seg,range(4))
 				labelweights += tmp
 				labelweights = labelweights.astype(np.float32)
 				labelweights = labelweights/np.sum(labelweights)
@@ -136,7 +139,7 @@ class ScannetDatasetWholeScene():
 			self.labelweights = 1/np.log(1.2+labelweights)
 		
 		elif split=='test':
-			self.labelweights = np.ones(21)
+			self.labelweights = np.ones(3)
 
 
 	def __getitem__(self, index):
@@ -193,7 +196,7 @@ class ScannetDatasetWholeScene():
 		return len(self.scene_points_list)
 
 
-class ScannetDatasetVirtualScan():
+class VeggiePlatterDatasetVirtualScan():
 
 
 	def __init__(self, root, npoints=8192, split='train'):
@@ -201,7 +204,7 @@ class ScannetDatasetVirtualScan():
 		self.npoints = npoints
 		self.root = root
 		self.split = split
-		self.data_filename = os.path.join(self.root, 'scannet_%s.pickle'%(split))
+		self.data_filename = os.path.join(self.root, 'veggie_platter_%s.pickle'%(split))
 		
 		with open(self.data_filename,'rb') as fp:
 			self.scene_points_list = pickle.load(fp)
@@ -209,16 +212,16 @@ class ScannetDatasetVirtualScan():
 		
 		if split=='train':
 			
-			labelweights = np.zeros(21)
+			labelweights = np.zeros(3)
 			for seg in self.semantic_labels_list:
-				tmp,_ = np.histogram(seg,range(22))
+				tmp,_ = np.histogram(seg,range(4))
 				labelweights += tmp
 				labelweights = labelweights.astype(np.float32)
 				labelweights = labelweights/np.sum(labelweights)
 			self.labelweights = 1/np.log(1.2+labelweights)
 		
 		elif split=='test':
-			self.labelweights = np.ones(21)
+			self.labelweights = np.ones(3)
 
 
 	def __getitem__(self, index):

@@ -9,7 +9,7 @@ import os
 import sys
 
 from utils import provider, tf_util, pc_util
-import scannet_dataset
+import veggie_platter_dataset
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0, help='GPU to use [default: GPU 0]')
@@ -56,10 +56,10 @@ HOSTNAME = socket.gethostname()
 NUM_CLASSES = 21
 
 # Shapenet official train/test split
-DATA_PATH = 'data/scannet_data_pointnet2'
-TRAIN_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
-TEST_DATASET = scannet_dataset.ScannetDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
-TEST_DATASET_WHOLE_SCENE = scannet_dataset.ScannetDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
+DATA_PATH = 'data/veggie_platter_data_pointnet2'
+TRAIN_DATASET = veggie_platter_dataset.VeggiePlatterDataset(root=DATA_PATH, npoints=NUM_POINT, split='train')
+TEST_DATASET = veggie_platter_dataset.VeggiePlatterDataset(root=DATA_PATH, npoints=NUM_POINT, split='test')
+TEST_DATASET_WHOLE_SCENE = veggie_platter_dataset.VeggiePlatterDatasetWholeScene(root=DATA_PATH, npoints=NUM_POINT, split='test')
 
 
 def log_string(out_str):

@@ -39,13 +39,13 @@ Then, add flags of `-I$TF_INC/external/nsync/public -L$TF_LIB -ltensorflow_frame
 
 #### Downloading data
 
-The paper uses pickled data derived from the ScanNet dataset. The authors have preprocessed data for you to download <a href="https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip">here (1.72GB)</a>. My code expects to find data here: `pointnet_datasets/data/scannet_data_pointnet2/*.pickle`.
+The paper uses pickled data derived from the ScanNet dataset. The authors have preprocessed data for you to download <a href="https://shapenet.cs.stanford.edu/media/veggie_platter_data_pointnet2.zip">here (1.72GB)</a>. My code expects to find data here: `pointnet_datasets/data/veggie_platter_data_pointnet2/*.pickle`.
 
 ```
 cd pointnet_datasets
-mkdir -p data/scannet_data_pointnet2 && cd data/scannet_data_pointnet2
-wget https://shapenet.cs.stanford.edu/media/scannet_data_pointnet2.zip
-unzip scannet_data_pointnet2.zip
+mkdir -p data/veggie_platter_data_pointnet2 && cd data/veggie_platter_data_pointnet2
+wget https://shapenet.cs.stanford.edu/media/veggie_platter_data_pointnet2.zip
+unzip veggie_platter_data_pointnet2.zip
 ```
 
 #### Training/Testing Model

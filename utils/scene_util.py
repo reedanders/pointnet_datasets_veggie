@@ -61,7 +61,7 @@ def virtual_scan(xyz, mode=-1):
   return smpidx
 
 if __name__=='__main__':
-  pc = np.load('scannet_dataset/scannet_scenes/scene0015_00.npy')
+  pc = np.load('veggie_platter_dataset/veggie_platter_scenes/scene0015_00.npy')
   print pc.shape
   xyz = pc[:,:3]
   seg = pc[:,7]
